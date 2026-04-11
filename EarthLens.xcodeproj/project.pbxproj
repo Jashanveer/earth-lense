@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000010000000000000001 /* EarthLensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000110000000000000001 /* EarthLensApp.swift */; };
+		A10000020000000000000001 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000120000000000000001 /* AppModel.swift */; };
+		A10000030000000000000001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000130000000000000001 /* AppState.swift */; };
+		A10000040000000000000001 /* AppPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000140000000000000001 /* AppPaths.swift */; };
+		A10000050000000000000001 /* LaunchAgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000150000000000000001 /* LaunchAgentService.swift */; };
+		A10000060000000000000001 /* EarthLensService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000160000000000000001 /* EarthLensService.swift */; };
+		A10000070000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000170000000000000001 /* ContentView.swift */; };
+		A10000080000000000000001 /* GlassPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000180000000000000001 /* GlassPanel.swift */; };
+		A10000090000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000190000000000000001 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A10000100000000000000001 /* EarthLens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EarthLens.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000110000000000000001 /* EarthLensApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthLensApp.swift; sourceTree = "<group>"; };
+		A10000120000000000000001 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		A10000130000000000000001 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		A10000140000000000000001 /* AppPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPaths.swift; sourceTree = "<group>"; };
+		A10000150000000000000001 /* LaunchAgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAgentService.swift; sourceTree = "<group>"; };
+		A10000160000000000000001 /* EarthLensService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthLensService.swift; sourceTree = "<group>"; };
+		A10000170000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A10000180000000000000001 /* GlassPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassPanel.swift; sourceTree = "<group>"; };
+		A10000190000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000200000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000210000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A10000220000000000000001 /* EarthLens */,
+				A10000230000000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000220000000000000001 /* EarthLens */ = {
+			isa = PBXGroup;
+			children = (
+				A10000110000000000000001 /* EarthLensApp.swift */,
+				A10000120000000000000001 /* AppModel.swift */,
+				A10000240000000000000001 /* Models */,
+				A10000250000000000000001 /* Services */,
+				A10000260000000000000001 /* Views */,
+				A10000190000000000000001 /* Assets.xcassets */,
+			);
+			path = EarthLens;
+			sourceTree = "<group>";
+		};
+		A10000230000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000100000000000000001 /* EarthLens.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A10000240000000000000001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A10000130000000000000001 /* AppState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A10000250000000000000001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A10000140000000000000001 /* AppPaths.swift */,
+				A10000150000000000000001 /* LaunchAgentService.swift */,
+				A10000160000000000000001 /* EarthLensService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A10000260000000000000001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A10000170000000000000001 /* ContentView.swift */,
+				A10000180000000000000001 /* GlassPanel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000270000000000000001 /* EarthLens */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000300000000000000001 /* Build configuration list for PBXNativeTarget "EarthLens" */;
+			buildPhases = (
+				A10000280000000000000001 /* Sources */,
+				A10000200000000000000001 /* Frameworks */,
+				A10000290000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthLens;
+			productName = EarthLens;
+			productReference = A10000100000000000000001 /* EarthLens.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000310000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A10000270000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = A10000320000000000000001 /* Build configuration list for PBXProject "EarthLens" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000210000000000000001;
+			productRefGroup = A10000230000000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000270000000000000001 /* EarthLens */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000290000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000090000000000000001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000280000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000020000000000000001 /* AppModel.swift in Sources */,
+				A10000070000000000000001 /* ContentView.swift in Sources */,
+				A10000080000000000000001 /* GlassPanel.swift in Sources */,
+				A10000050000000000000001 /* LaunchAgentService.swift in Sources */,
+				A10000030000000000000001 /* AppState.swift in Sources */,
+				A10000010000000000000001 /* EarthLensApp.swift in Sources */,
+				A10000060000000000000001 /* EarthLensService.swift in Sources */,
+				A10000040000000000000001 /* AppPaths.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A10000330000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A10000340000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		A10000350000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = EarthLens;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "EarthLens can update your desktop wallpaper across spaces when needed.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.earthlens.mac;
+				PRODUCT_NAME = EarthLens;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A10000360000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = EarthLens;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "EarthLens can update your desktop wallpaper across spaces when needed.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.earthlens.mac;
+				PRODUCT_NAME = EarthLens;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000300000000000000001 /* Build configuration list for PBXNativeTarget "EarthLens" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000350000000000000001 /* Debug */,
+				A10000360000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000320000000000000001 /* Build configuration list for PBXProject "EarthLens" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000330000000000000001 /* Debug */,
+				A10000340000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000310000000000000001 /* Project object */;
+}
