@@ -180,9 +180,35 @@ struct ContentView: View {
                 .labelsHidden()
                 .disabled(model.isBusy)
 
-                Text(model.snapshot.rotationEnabled ? "Background rotation is on." : "Manual mode is on.")
+                Text(model.snapshot.rotationEnabled ? "Rotation runs while EarthLens is open." : "Manual mode is on.")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(.secondary)
+
+                Divider()
+
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Open at Login")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(.primary)
+                        Text("Launch EarthLens automatically when you sign in.")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    Spacer()
+
+                    Toggle("", isOn: Binding(
+                        get: { model.snapshot.openAtLogin },
+                        set: { newValue in
+                            Task { await model.setOpenAtLogin(enabled: newValue) }
+                        }
+                    ))
+                    .toggleStyle(.switch)
+                    .labelsHidden()
+                    .disabled(model.isBusy)
+                }
             }
             .frame(width: width, alignment: .leading)
         }
@@ -206,7 +232,7 @@ struct ContentView: View {
                                 .font(.system(size: 28, weight: .bold, design: .rounded))
                                 .foregroundStyle(.primary)
 
-                            Text("One guided setup applies your first wallpaper and enables background rotation at login.")
+                            Text("One guided setup applies your first wallpaper and turns on auto-rotate while EarthLens is running.")
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -216,8 +242,8 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         setupStep("Apply your first Earth View wallpaper.")
                         setupStep("Create the local image cache and state files.")
-                        setupStep("Add EarthLens to your Login Items so rotation continues after restart.")
-                        setupStep("Approve the macOS prompt to allow EarthLens to open at login.")
+                        setupStep("Enable auto-rotate at the interval you choose.")
+                        setupStep("Open EarthLens at login is opt-in — toggle it on later if you want rotation to continue after a restart.")
                     }
 
                     HStack(spacing: 12) {

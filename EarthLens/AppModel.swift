@@ -13,8 +13,12 @@ final class AppModel: ObservableObject {
     private let service = EarthLensService()
     private var hasLoaded = false
     private var rotationTask: Task<Void, Never>?
+    private var screenChangeTask: Task<Void, Never>?
+    private var screenChangeObserver: NSObjectProtocol?
 
     init() {
+        startObservingScreenChanges()
+
         Task { @MainActor [weak self] in
             await self?.handleAppLaunch()
         }
@@ -60,6 +64,12 @@ final class AppModel: ObservableObject {
     func setRotationInterval(_ interval: RotationInterval) async {
         await perform("Updating rotation interval") {
             try await self.service.updateRotation(enabled: self.snapshot.rotationEnabled, interval: interval)
+        }
+    }
+
+    func setOpenAtLogin(enabled: Bool) async {
+        await perform(enabled ? "Adding EarthLens to Login Items" : "Removing EarthLens from Login Items") {
+            try await self.service.setOpenAtLogin(enabled: enabled)
         }
     }
 
@@ -122,5 +132,41 @@ final class AppModel: ObservableObject {
         }
 
         return "Ready for the first wallpaper."
+    }
+
+    private func startObservingScreenChanges() {
+        screenChangeObserver = NotificationCenter.default.addObserver(
+            forName: NSApplication.didChangeScreenParametersNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.scheduleWallpaperReapplyForScreenChange()
+            }
+        }
+    }
+
+    private func scheduleWallpaperReapplyForScreenChange() {
+        screenChangeTask?.cancel()
+        screenChangeTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(1))
+            guard let self, !Task.isCancelled, self.snapshot.currentID != nil else { return }
+            await self.reapplyCurrentWallpaperForScreenChange()
+        }
+    }
+
+    private func reapplyCurrentWallpaperForScreenChange() async {
+        do {
+            let newSnapshot = try await service.reapplyCurrentWallpaper()
+            guard !Task.isCancelled else { return }
+            snapshot = newSnapshot
+            previewImage = newSnapshot.currentImageURL.flatMap(NSImage.init(contentsOf:))
+            statusMessage = makeStatusMessage(for: newSnapshot)
+            errorMessage = nil
+        } catch {
+            guard !Task.isCancelled else { return }
+            errorMessage = error.localizedDescription
+            statusMessage = "EarthLens needs attention."
+        }
     }
 }

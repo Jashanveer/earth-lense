@@ -47,6 +47,14 @@ struct MenuBarMenu: View {
             .disabled(model.isBusy)
         }
 
+        Toggle("Open at Login", isOn: Binding(
+            get: { model.snapshot.openAtLogin },
+            set: { newValue in
+                Task { await model.setOpenAtLogin(enabled: newValue) }
+            }
+        ))
+        .disabled(model.isBusy)
+
         Divider()
 
         Button("Open EarthLens") {

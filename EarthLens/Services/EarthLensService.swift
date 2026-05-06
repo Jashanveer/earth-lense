@@ -56,6 +56,22 @@ actor EarthLensService {
         return makeSnapshot(from: state, catalog: catalog)
     }
 
+    func reapplyCurrentWallpaper() async throws -> AppSnapshot {
+        try AppPaths.ensureDirectories()
+
+        var state = try loadState()
+        normalize(&state)
+        let catalog = try await loadCatalog(forceRefresh: false)
+
+        if let imageURL = try await currentImageURL(for: state) {
+            try await setWallpaper(at: imageURL)
+            state.currentImageFilename = imageURL.lastPathComponent
+        }
+
+        try saveState(state)
+        return makeSnapshot(from: state, catalog: catalog)
+    }
+
     func updateRotation(enabled: Bool, interval: RotationInterval, advanceImmediately: Bool = false) async throws -> AppSnapshot {
         try AppPaths.ensureDirectories()
 
@@ -71,21 +87,31 @@ actor EarthLensService {
 
             state.rotationEnabled = true
             state.setupCompleted = true
-            try saveState(state)
+        } else {
+            state.rotationEnabled = false
+        }
 
+        try saveState(state)
+        return try await loadSnapshot(forceRefresh: false)
+    }
+
+    func setOpenAtLogin(enabled: Bool) async throws -> AppSnapshot {
+        try AppPaths.ensureDirectories()
+
+        if enabled {
             do {
                 try LoginItemService.register()
             } catch {
                 appendLog("Login item registration failed: \(error.localizedDescription)")
+                throw EarthLensError.loginItemFailed(error.localizedDescription)
             }
         } else {
             do {
                 try await LoginItemService.unregister()
             } catch {
                 appendLog("Login item unregistration failed: \(error.localizedDescription)")
+                throw EarthLensError.loginItemFailed(error.localizedDescription)
             }
-            state.rotationEnabled = false
-            try saveState(state)
         }
 
         return try await loadSnapshot(forceRefresh: false)
@@ -106,12 +132,6 @@ actor EarthLensService {
         state.rotationInterval = interval
         state.setupCompleted = true
         try saveState(state)
-
-        do {
-            try LoginItemService.register()
-        } catch {
-            appendLog("Login item registration failed: \(error.localizedDescription)")
-        }
 
         return try await loadSnapshot(forceRefresh: false)
     }
@@ -182,7 +202,8 @@ actor EarthLensService {
             canGoForward: historyCursor.map { $0 < state.history.count - 1 } ?? false,
             displayTitle: currentEntry?.title ?? (state.currentID == nil ? "Ready for a first wallpaper" : "Earth View"),
             displaySubtitle: currentEntry?.subtitle ?? (state.currentID == nil ? "Load the first scene to start the gallery." : nil),
-            setupCompleted: state.setupCompleted
+            setupCompleted: state.setupCompleted,
+            openAtLogin: LoginItemService.isEnabled
         )
     }
 
@@ -416,6 +437,21 @@ actor EarthLensService {
         return destination
     }
 
+    private func currentImageURL(for state: PersistedState) async throws -> URL? {
+        if let currentImageFilename = state.currentImageFilename {
+            let savedURL = AppPaths.imagesDirectory.appendingPathComponent(currentImageFilename)
+            if fileManager.fileExists(atPath: savedURL.path) {
+                return savedURL
+            }
+        }
+
+        guard let currentID = state.currentID else {
+            return nil
+        }
+
+        return try await downloadImage(id: currentID)
+    }
+
     private func setWallpaper(at imageURL: URL) async throws {
         try await MainActor.run {
             try self.setWallpaperOnMainActor(at: imageURL)
@@ -469,29 +505,32 @@ actor EarthLensService {
         }
 
         guard !state.history.isEmpty else {
-            state.historyCursor = nil
+            if let currentID = state.currentID {
+                state.history = [currentID]
+                state.historyCursor = 0
+                state.currentImageFilename = "\(currentID).jpg"
+            } else {
+                state.historyCursor = nil
+                state.currentImageFilename = nil
+            }
             return
         }
 
         if let cursor = state.historyCursor, state.history.indices.contains(cursor) {
             state.currentID = state.history[cursor]
-            if state.currentImageFilename == nil {
-                state.currentImageFilename = "\(state.history[cursor]).jpg"
-            }
+            state.currentImageFilename = "\(state.history[cursor]).jpg"
             return
         }
 
         if let currentID = state.currentID, let matchedIndex = state.history.lastIndex(of: currentID) {
             state.historyCursor = matchedIndex
-            if state.currentImageFilename == nil {
-                state.currentImageFilename = "\(currentID).jpg"
-            }
+            state.currentImageFilename = "\(currentID).jpg"
             return
         }
 
         state.historyCursor = state.history.count - 1
         state.currentID = state.history[state.history.count - 1]
-        if state.currentImageFilename == nil, let currentID = state.currentID {
+        if let currentID = state.currentID {
             state.currentImageFilename = "\(currentID).jpg"
         }
     }

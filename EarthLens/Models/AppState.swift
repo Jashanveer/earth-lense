@@ -129,6 +129,7 @@ struct AppSnapshot {
     var displayTitle: String
     var displaySubtitle: String?
     var setupCompleted: Bool
+    var openAtLogin: Bool
 
     var currentEarthViewURL: URL? {
         guard let currentID else { return nil }
@@ -148,7 +149,8 @@ struct AppSnapshot {
         canGoForward: false,
         displayTitle: "Ready for a first wallpaper",
         displaySubtitle: "Load the first scene to start the gallery.",
-        setupCompleted: false
+        setupCompleted: false,
+        openAtLogin: false
     )
 }
 
@@ -159,6 +161,7 @@ enum EarthLensError: LocalizedError {
     case wallpaperSetFailed(String)
     case stateReadFailed
     case noPreviousWallpaper
+    case loginItemFailed(String)
 
     var errorDescription: String? {
         switch self {
@@ -174,6 +177,8 @@ enum EarthLensError: LocalizedError {
             return "The local EarthLens state could not be read."
         case .noPreviousWallpaper:
             return "There isn't a previous wallpaper yet."
+        case .loginItemFailed(let message):
+            return "Could not update Open at Login: \(message)"
         }
     }
 }
