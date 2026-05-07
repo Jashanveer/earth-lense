@@ -36,7 +36,26 @@ struct EarthLensApp: App {
     @StateObject private var model = AppModel()
 
     init() {
+        Self.exitIfRedundantLaunch()
         try? AppPaths.ensureDirectories()
+    }
+
+    private static func exitIfRedundantLaunch() {
+        // Older builds installed a LaunchAgent at ~/Library/LaunchAgents/com.earthlens.wallpaper.plist
+        // that periodically execs `EarthLens --rotate`. The current architecture rotates from a timer
+        // inside the long-lived menu-bar process, so any --rotate launch is redundant — bow out
+        // before SwiftUI installs a second menu bar icon. The sandboxed App Store build can't
+        // remove the orphaned plist; quitting fast is the next-best thing.
+        if CommandLine.arguments.contains("--rotate") {
+            exit(0)
+        }
+
+        let me = NSRunningApplication.current
+        guard let bundleID = me.bundleIdentifier else { return }
+        let siblings = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
+        if siblings.contains(where: { $0.processIdentifier < me.processIdentifier }) {
+            exit(0)
+        }
     }
 
     var body: some Scene {
