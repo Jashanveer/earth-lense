@@ -68,11 +68,17 @@ struct MenuBarMenu: View {
         }
         .keyboardShortcut("O")
 
-        Divider()
+        if shouldShowQuitItem {
+            Divider()
 
-        Button("Quit EarthLens") {
-            NSApp.terminate(nil)
+            Button("Quit EarthLens") {
+                NSApp.terminate(nil)
+            }
+            .keyboardShortcut("Q")
         }
-        .keyboardShortcut("Q")
+    }
+
+    private var shouldShowQuitItem: Bool {
+        NSApp.activationPolicy() != .regular
     }
 }
