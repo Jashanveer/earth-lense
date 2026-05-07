@@ -99,8 +99,7 @@ struct ContentView: View {
                     } label: {
                         Label("Previous", systemImage: "arrow.left")
                     }
-                    .buttonStyle(.glass)
-                    .buttonBorderShape(.capsule)
+                    .capsuleActionStyle(prominent: false)
                     .disabled(model.isBusy || !model.snapshot.canGoPrevious)
 
                     Button {
@@ -108,8 +107,7 @@ struct ContentView: View {
                     } label: {
                         Label("Next", systemImage: "arrow.right")
                     }
-                    .buttonStyle(.glassProminent)
-                    .buttonBorderShape(.capsule)
+                    .capsuleActionStyle(prominent: true)
                     .disabled(model.isBusy)
                 }
             }
@@ -137,7 +135,7 @@ struct ContentView: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            .glassEffect(.clear, in: .capsule)
+            .clearPillGlassEffect(in: Capsule())
         }
     }
 
@@ -252,8 +250,7 @@ struct ContentView: View {
                         } label: {
                             Label("Set Up Automatically", systemImage: "wand.and.stars")
                         }
-                        .buttonStyle(.glassProminent)
-                        .buttonBorderShape(.capsule)
+                        .capsuleActionStyle(prominent: true)
                         .disabled(model.isBusy)
 
                         Button {
@@ -261,8 +258,7 @@ struct ContentView: View {
                         } label: {
                             Text("Manual Only")
                         }
-                        .buttonStyle(.glass)
-                        .buttonBorderShape(.capsule)
+                        .capsuleActionStyle(prominent: false)
                         .disabled(model.isBusy)
                     }
 

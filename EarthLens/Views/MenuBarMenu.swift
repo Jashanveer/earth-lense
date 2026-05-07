@@ -12,14 +12,18 @@ struct MenuBarMenu: View {
 
         Divider()
 
-        Button("Next Wallpaper", systemImage: "arrow.right") {
+        Button {
             Task { await model.changeWallpaper() }
+        } label: {
+            Label("Next Wallpaper", systemImage: "arrow.right")
         }
         .disabled(model.isBusy)
         .keyboardShortcut("N")
 
-        Button("Previous Wallpaper", systemImage: "arrow.left") {
+        Button {
             Task { await model.previousWallpaper() }
+        } label: {
+            Label("Previous Wallpaper", systemImage: "arrow.left")
         }
         .disabled(model.isBusy || !model.snapshot.canGoPrevious)
 
@@ -64,11 +68,17 @@ struct MenuBarMenu: View {
         }
         .keyboardShortcut("O")
 
-        Divider()
+        if shouldShowQuitItem {
+            Divider()
 
-        Button("Quit EarthLens") {
-            NSApp.terminate(nil)
+            Button("Quit EarthLens") {
+                NSApp.terminate(nil)
+            }
+            .keyboardShortcut("Q")
         }
-        .keyboardShortcut("Q")
+    }
+
+    private var shouldShowQuitItem: Bool {
+        NSApp.activationPolicy() != .regular
     }
 }

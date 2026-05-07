@@ -12,8 +12,49 @@ struct GlassPanel<Content: View>: View {
     var body: some View {
         content
             .padding(padding)
-            .glassEffect(in: .rect(cornerRadius: 30))
+            .panelGlassEffect(in: RoundedRectangle(cornerRadius: 30, style: .continuous))
     }
 }
 
+extension View {
+    @ViewBuilder
+    func panelGlassEffect<S: Shape>(in shape: S) -> some View {
+        if #available(macOS 26.0, *) {
+            self.glassEffect(in: shape)
+        } else {
+            self.background(.regularMaterial, in: shape)
+        }
+    }
 
+    @ViewBuilder
+    func clearPillGlassEffect<S: Shape>(in shape: S) -> some View {
+        if #available(macOS 26.0, *) {
+            self.glassEffect(.clear, in: shape)
+        } else {
+            self.background(.ultraThinMaterial, in: shape)
+        }
+    }
+
+    @ViewBuilder
+    func capsuleActionStyle(prominent: Bool) -> some View {
+        if #available(macOS 26.0, *) {
+            if prominent {
+                self.buttonStyle(.glassProminent).buttonBorderShape(.capsule)
+            } else {
+                self.buttonStyle(.glass).buttonBorderShape(.capsule)
+            }
+        } else if #available(macOS 14.0, *) {
+            if prominent {
+                self.buttonStyle(.borderedProminent).buttonBorderShape(.capsule)
+            } else {
+                self.buttonStyle(.bordered).buttonBorderShape(.capsule)
+            }
+        } else {
+            if prominent {
+                self.buttonStyle(.borderedProminent)
+            } else {
+                self.buttonStyle(.bordered)
+            }
+        }
+    }
+}
